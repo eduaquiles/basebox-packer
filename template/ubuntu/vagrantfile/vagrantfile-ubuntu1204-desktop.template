@@ -9,25 +9,25 @@ Vagrant.configure("2") do |config|
     # config.berkshelf.enabled = true
   
     # Shell - Hello World
-    # config.vm.provision :shell, :inline => "C:\\vagrant\\scripts\\HelloWorld.bat"
+    config.vm.provision :shell, :inline => "echo TaDa!"
   
     config.vm.provider :virtualbox do |v, override|
         v.gui = true
-        v.customize ["modifyvm", :id, "--memory", 512]
-        v.customize ["modifyvm", :id, "--cpus", 1]
+        v.customize ["modifyvm", :id, "--memory", 8192]
+        v.customize ["modifyvm", :id, "--cpus", 2]
         v.customize ["modifyvm", :id, "--vram", "256"]
-        v.customize ["setextradata", "global", "GUI/MaxGuestResolution", "any"]
-        v.customize ["setextradata", :id, "CustomVideoMode1", "1024x768x32"]
         v.customize ["modifyvm", :id, "--ioapic", "on"]
         v.customize ["modifyvm", :id, "--rtcuseutc", "on"]
         v.customize ["modifyvm", :id, "--accelerate3d", "on"]
         v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+        v.customize ['modifyvm', :id, '--audio', 'pulse']
+        v.customize ['modifyvm', :id, '--audiocontroller', 'ac97']
     end
 
     config.vm.provider :vmware_fusion do |v, override|
         v.gui = true
-        v.vmx["memsize"] = "512"
-        v.vmx["numvcpus"] = "1"
+        v.vmx["memsize"] = "8192"
+        v.vmx["numvcpus"] = "2"
         v.vmx["cpuid.coresPerSocket"] = "1"
         v.vmx["ethernet0.virtualDev"] = "vmxnet3"
         v.vmx["RemoteDisplay.vnc.enabled"] = "false"
@@ -37,8 +37,8 @@ Vagrant.configure("2") do |config|
 
     config.vm.provider :vmware_workstation do |v, override|
         v.gui = true
-        v.vmx["memsize"] = "512"
-        v.vmx["numvcpus"] = "1"
+        v.vmx["memsize"] = "8192"
+        v.vmx["numvcpus"] = "2"
         v.vmx["cpuid.coresPerSocket"] = "1"
         v.vmx["ethernet0.virtualDev"] = "vmxnet3"
         v.vmx["RemoteDisplay.vnc.enabled"] = "false"
